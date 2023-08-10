@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <style>
+        body{
+            padding: 10px 50px;
+        }
+        .form{
+            font-size: large
+        }
+        .form input{
+            width: 50%;
+            padding: 12px 20px;
+            border: 1px solid yellowgreen;
+            margin: 14px;
+            border-radius: 4px;
+            font-size: 15px;
+        }
+        .error{
+            color: red;
+            font: bold;
+        }
+        .subButton{
+            border-radius: 12px;
+            width: 100px;
+            height: 50px;
+            font-size: 18px;
+            margin: 25px 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Basic Form</h2>
+    <form name="myForm" onsubmit="return validForm()" action="/demo.php" method="post">
+        <div class="form" id="name">
+            Name: <input type="text" name="fname">
+            <span class="error"></span>
+        </div>
+        <div class="form" id="email">
+            Email: <input type="email" name="femail">
+            <span class="error"></span>
+        </div>
+        <div class="form" id="phone">
+            Phone: <input type="number" name="fphone">
+            <span class="error"></span>
+        </div>
+        <div class="form" id="pass">
+            Password: <input type="password" name="fpass">
+            <span class="error"></span>
+        </div>
+        <div class="form" id="cpass">
+            Confirm Password: <input type="password" name="fcpass">
+            <span class="error"></span>
+        </div>
+        <input class="subButton" type="submit" value="Submit">
+    </form>
+</body>
+
+<script>
+
+    function setError(id,err){
+       element= document.getElementById(id);
+       element.getElementsByClassName("error")[0].innerHTML=err;
+
+    }
+    function validForm(){
+      
+        var isValid=true;
+        var name=document.forms['myForm']['fname'].value.trim();
+        var email=document.forms['myForm']['femail'].value.trim();
+        var phone=document.forms['myForm']['fphone'].value.trim();
+        var pass=document.forms['myForm']['fpass'].value.trim();
+        var cpass=document.forms['myForm']['fcpass'].value.trim();
+        console.log(name);
+        if(name.length<5){
+            setError("name","Length of name cant be less than 5 characters");
+            isValid=false;
+        }
+        if(email.length>25){
+            setError("email","Length of email cant be greater than 25 characters");
+            isValid=false;
+        }
+        if(phone.length!=10){
+            setError("phone","Phone number should be of 10 digits!");
+            isValid=false;
+        }
+        if(pass.length<6){
+            setError("pass","Password should be atleast 6 characters long!");
+            isValid=false;
+        }
+        if(cpass!=pass){
+            setError("cpass","Password and Confirm Password must be same");
+            isValid=false;
+        }
+        alert("Thanks for Submitting")
+        return isValid;
+    }
+</script>
+</html>
