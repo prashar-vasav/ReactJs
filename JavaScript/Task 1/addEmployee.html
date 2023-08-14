@@ -42,14 +42,14 @@
             
         </div>
         <div class="actions">
-        <button type="button" class="dis" >DISCARD</button>
+        <button type="button" class="dis">DISCARD</button>
         <button type="submit" class="sub" id="showDialog">SUBMIT</button>
         </div>
     </form>
     <dialog id="confirmDialog">
         <h2 class="dialogHeader">Are you sure?</h2>
         <br>
-        <form>
+        <form onsubmit="return validate()" action="#">
         <div class="dialog-actions">
             <button class="cancel" id="closeDialog">CANCEL</button>
             <button class="confirm" type="submit" onclick="return validate()">CONFIRM</button>
