@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Employee</title>
+    <link rel="stylesheet" href="addEmp.css">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+
+</head>
+<body>
+    <h2 class="header">Add Employee</h2>
+    <form class="addEmp" name="addEmp" method="dialog" >
+        <div class="input-data">
+            
+            <div class="col-1" >
+                <input type="text" name="fname" placeholder="FIRST NAME">
+                <div class="form" id="email">
+                    
+                    <input type="email" name="email" placeholder="EMAIL ID"><br>
+                    <span class="error"></span>
+                </div>
+                
+                <select name="department" id="dep" aria-placeholder="DOMAIN">
+                    <option selected disabled>DOMAIN</option>
+                    <option>DEVELOPMENT</option>
+                    <option>TESTING</option>
+                    <option>OPERATIONS</option>
+                    <option>ACCOUNTS</option>
+                </select>
+            </div>
+            <div class="col-2">
+                <input type="text" name="lname" placeholder="LAST NAME">
+                <br>
+                <div class="form" id="phno">
+
+                    <input type="number" name="pno" placeholder="PHONE NO"><br>
+                    <span class="error"></span>
+                </div>
+            </div>
+            <br><br>
+            
+        </div>
+        <div class="actions">
+        <button type="button" class="dis" >DISCARD</button>
+        <button type="submit" class="sub" id="showDialog">SUBMIT</button>
+        </div>
+    </form>
+    <dialog id="confirmDialog">
+        <h2 class="dialogHeader">Are you sure?</h2>
+        <br>
+        <form>
+        <div class="dialog-actions">
+            <button class="cancel" id="closeDialog">CANCEL</button>
+            <button class="confirm" type="submit" onclick="return validate()">CONFIRM</button>
+        </div>
+        </form>
+    </dialog>
+</body>
+<script>
+    const showDialog=document.getElementById('showDialog');
+    const dialog=document.getElementById('confirmDialog')
+    const closeDialog=document.getElementById('closeDialog')
+   
+    showDialog.addEventListener("click",()=>{
+        if(dialog.close){
+        dialog.showModal()
+            
+        }
+    else{
+    dialog.close();
+    }
+
+    })
+    closeDialog.addEventListener("click",(e)=>{
+        e.preventDefault();
+        dialog.close();
+
+    })
+    function setError(id,err){
+        element= document.getElementById(id);
+       element.getElementsByClassName("error")[0].innerHTML=err;
+    }
+    function validate(){
+        var isValid=true;
+        var email=document.forms['addEmp']['email'].value;
+        var pno=document.forms['addEmp']['pno'].value;
+        var emailcheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if(!emailcheck.test(email)){
+            setError("email","Enter Valid Email Address");
+            isValid=false;
+        }
+        if(pno.length!=10){
+            setError("phno","Enter Valid Phone No");
+            isValid=false;
+        }
+        return isValid;
+    }
+
+</script>
+</html>

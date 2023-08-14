@@ -10,19 +10,42 @@
 </head>
 <body>
     <h2 class="header">Welcome</h2>
-    <form class="loginForm">
+    <form name="loginForm" class="loginForm" onsubmit="return validate()" action="addEmployee.html" method="post"  >
         <div class="form" id="email">
-            <input type="email" name="userid" placeholder="USER ID">
+            <input type="email" name="email" placeholder="USER ID">
             <br>
-            <span class="error">Enter Valid Email Address</span>
+            <span class="error"></span>
         </div>
         <div class="form" id="pass">
             <input type="password" name="pass" placeholder="PASSWORD">
             <br>
-            <span class="error">8-16 characters , 1 Special Character, 1 Uppercase, 1 Lowercase, 1 number</span>
+            <span class="error"></span>
         </div>
         <br><br>
         <button type="submit" class="sub">LOGIN</button>
     </form>
 </body>
+<script>
+    function setError(id,err){
+        element= document.getElementById(id);
+       element.getElementsByClassName("error")[0].innerHTML=err;
+    }
+    function validate(){
+        var isValid=true;
+        var email=document.forms['loginForm']['email'].value;
+        var pass=document.forms['loginForm']['pass'].value.trim();
+        console.log(email,pass);
+        var emailcheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        var pswcheck = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9@#$%^&*]{8,15}$/;
+        if(!emailcheck.test(email)){
+            setError("email","Enter Valid Email Address");
+            isValid=false;
+        }
+        if(!pswcheck.test(pass)){
+            setError("pass","8-16 characters , 1 Special Character, 1 Uppercase, 1 Lowercase, 1 number");
+            isValid=false;
+        }
+        return isValid;
+    }
+</script>
 </html>
