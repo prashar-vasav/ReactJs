@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Stats from "./Components/Stats";
-import PackingList from "./Components/PackingList";
-import Form from "./Components/Form";
-import Logo from "./Components/Logo";
+import Stats from "./Stats";
+import PackingList from "./PackingList";
+import Form from "./Form";
+import Logo from "./Logo";
 
 // const initialItems = [
 //   { id: 1, description: "Passports", quantity: 2, packed: false },
@@ -44,12 +44,3 @@ export default function App() {
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
