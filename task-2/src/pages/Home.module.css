@@ -1,0 +1,33 @@
+h2 {
+  color: white;
+  margin-left: 80px;
+}
+.table {
+  background-color: white;
+  padding-left: 90px;
+}
+table {
+  width: 100%;
+  height: 90vh;
+  border-collapse: collapse;
+}
+th {
+  text-align: left;
+  color: #2148c0;
+  font-family: Montserrat;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%;
+}
+tr{
+  border-bottom: 20px solid 2148c0;
+}
+td{
+  color: #2148C0;
+font-family: Montserrat;
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: 24px; /* 150% */
+}
