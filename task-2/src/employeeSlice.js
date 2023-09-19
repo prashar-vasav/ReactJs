@@ -7,8 +7,8 @@ const initialState = {
       fname: "vasav",
       lname: "helo",
       email: "prashar.vasav@tftus.com",
-      phno: "6xxxxxxxx6",
-      domain: "Development",
+      phno: "1234567890",
+      department: "Development",
     },
   ],
 };
@@ -50,4 +50,4 @@ const employeeSlice = createSlice({
 
 export default employeeSlice.reducer;
 
-export const { addEmployee, deleteEmployee } = employeeSlice.actions;
+export const { addEmployee, deleteEmployee,updateEmployee } = employeeSlice.actions;

@@ -2,24 +2,33 @@ import { useState } from "react";
 import styles from "./AddEmployee.module.css";
 import { useDispatch } from "react-redux";
 import { addEmployee } from "../employeeSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function AddEmployee() {
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
   const [phno, setPhno] = useState("");
-  const [department, setDepartment] = useState("Domain");
+  const [department, setDepartment] = useState("");
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
+  function domainSelector(e) {
+    setDepartment(e.target.value);
+  }
   function submitHandler(e) {
     e.preventDefault();
+    console.log({ fname, lname, email, phno, department });
     if (!fname || !department || !email || !phno) return;
     dispatch(addEmployee({ fname, lname, email, phno, department }));
     setEmail("");
     setFname("");
     setLname("");
-    setDepartment("DOMAIN");
+    setDepartment("");
     setPhno("");
+    navigate("/home");
+  }
+  function backHandler() {
+    navigate("/home");
   }
   return (
     <>
@@ -51,15 +60,13 @@ export default function AddEmployee() {
               className={styles.dep}
               placeholder="DOMAIN"
               required
-              onChange={(e) => setDepartment(e.target.value)}
+              onChange={(e) => domainSelector(e)}
             >
-              <option    defaultChecked defaultValue="Domain" disabled>
-                DOMAIN
-              </option>
-              <option>DEVELOPMENT</option>
-              <option>TESTING</option>
-              <option>OPERATIONS</option>
-              <option>ACCOUNTS</option>
+              <option value="">DOMAIN</option>
+              <option value="Development">DEVELOPMENT</option>
+              <option value="Testing">TESTING</option>
+              <option value="Operations">OPERATIONS</option>
+              <option value="Accounts">ACCOUNTS</option>
             </select>
           </div>
           <div>
@@ -86,7 +93,7 @@ export default function AddEmployee() {
           <br />
         </div>
         <div className={styles.actions}>
-          <button type="button" className={styles.dis}>
+          <button type="button" className={styles.dis} onClick={backHandler}>
             DISCARD
           </button>
           <button type="submit" className={styles.sub}>

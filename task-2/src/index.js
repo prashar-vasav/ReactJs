@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import { Provider } from "react-redux";
 import store from "./store";
+import "@fontsource/montserrat";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

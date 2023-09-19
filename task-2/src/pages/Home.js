@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import styles from "./Home.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteEmployee } from "../employeeSlice";
+import logo from '../Menu.png'
 
 export default function Home() {
   const employees = useSelector((state) => state.employee.employee);
@@ -40,9 +41,19 @@ export default function Home() {
   //     domain: "Development",
   //   },
   // ];
+  console.log(employees);
   return (
     <>
-      <h2>List Of Employees</h2>
+      <nav>
+        <h2>List Of Employees</h2>
+        <img src={logo} alt="logo"/>
+      </nav>
+
+      <div className={styles.btn}>
+        <Link to="/add">
+          <button className={styles.add}>Add</button>
+        </Link>
+      </div>
       <div className={styles.table}>
         <table>
           <thead>
@@ -55,21 +66,27 @@ export default function Home() {
             </tr>
           </thead>
           <tbody>
+            
             {employees.map((emp) => (
               <tr key={emp.id}>
                 <td>{`${emp.fname} ${emp.lname}`}</td>
                 <td>{emp.email}</td>
                 <td>{emp.phno}</td>
-                <td>{emp.domain}</td>
+                <td>{emp.department}</td>
                 <td>
-                  <div>
-                    <button>
-                      <Link to={`edit/${emp.id}`}>Edit</Link>
-                    </button>
+                  <div className={styles.action}>
+                    <Link to={`edit/${emp.id}`}>
+                      <span className={styles.edit}>
+                        <strong>Edit</strong>
+                      </span>
+                    </Link>
 
-                    <button onClick={() => dispatch(deleteEmployee(emp.id))}>
-                      Delete
-                    </button>
+                    <span
+                      className={styles.delete}
+                      onClick={() => dispatch(deleteEmployee(emp.id))}
+                    >
+                      <strong>Delete</strong>
+                    </span>
                   </div>
                 </td>
               </tr>
