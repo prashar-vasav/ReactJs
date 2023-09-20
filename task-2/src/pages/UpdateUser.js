@@ -26,7 +26,9 @@ function UpdateUser() {
   const [newPhno, setNewPhno] = useState(currPhno);
   const [newDepartment, setNewDepartment] = useState(currDepartment);
   const navigate = useNavigate();
+
   function updateHandler() {
+    if (!newFname || !newDepartment || !newEmail || !newPhno) return;
     const updatedUser = {
       id: id,
       fname: newFname,
@@ -55,6 +57,7 @@ function UpdateUser() {
               placeholder="FIRST NAME"
               defaultValue={currFname}
               onChange={(e) => setNewFname(e.target.value)}
+              required
             />
             <div className={styles.form} id="email">
               <input
@@ -63,6 +66,7 @@ function UpdateUser() {
                 placeholder="EMAIL ID"
                 defaultValue={currEmail}
                 onChange={(e) => setNewEmail(e.target.value)}
+                required
               />
               <br />
               <span className={styles.error}></span>
@@ -99,6 +103,7 @@ function UpdateUser() {
                 placeholder="PHONE NO"
                 defaultValue={currPhno}
                 onChange={(e) => setNewPhno(e.target.value)}
+                required
               />
               <br />
               <span className={styles.error}></span>

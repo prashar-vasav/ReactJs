@@ -2,10 +2,14 @@ import { Link } from "react-router-dom";
 import styles from "./Home.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteEmployee } from "../employeeSlice";
-import logo from '../Menu.png'
+
+import HamburgerMenu from "../components/HamburgerMenu";
+import Dialog from "../components/Dialog";
+import { useState } from "react";
 
 export default function Home() {
   const employees = useSelector((state) => state.employee.employee);
+  const { userId } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   // const employees = [
   //   {
@@ -42,11 +46,14 @@ export default function Home() {
   //   },
   // ];
   console.log(employees);
+  const [isOpen, setIsOpen] = useState(false);
+  if (!userId) return <p>Please Login First</p>;
   return (
     <>
       <nav>
         <h2>List Of Employees</h2>
-        <img src={logo} alt="logo"/>
+
+        <HamburgerMenu />
       </nav>
 
       <div className={styles.btn}>
@@ -66,7 +73,6 @@ export default function Home() {
             </tr>
           </thead>
           <tbody>
-            
             {employees.map((emp) => (
               <tr key={emp.id}>
                 <td>{`${emp.fname} ${emp.lname}`}</td>
@@ -74,16 +80,24 @@ export default function Home() {
                 <td>{emp.phno}</td>
                 <td>{emp.department}</td>
                 <td>
+                    {isOpen && (
+                      <Dialog
+                        isOpen={isOpen}
+                        setIsOpen={setIsOpen}
+                        onConfirm={() => {
+                          dispatch(deleteEmployee(emp.id));
+                        }}
+                      />
+                    )}
                   <div className={styles.action}>
                     <Link to={`edit/${emp.id}`}>
                       <span className={styles.edit}>
                         <strong>Edit</strong>
                       </span>
                     </Link>
-
                     <span
                       className={styles.delete}
-                      onClick={() => dispatch(deleteEmployee(emp.id))}
+                      onClick={() => setIsOpen(!isOpen)}
                     >
                       <strong>Delete</strong>
                     </span>

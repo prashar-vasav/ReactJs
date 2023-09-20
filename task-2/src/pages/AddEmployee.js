@@ -3,6 +3,10 @@ import styles from "./AddEmployee.module.css";
 import { useDispatch } from "react-redux";
 import { addEmployee } from "../employeeSlice";
 import { useNavigate } from "react-router-dom";
+import { nanoid } from "@reduxjs/toolkit";
+import Dialog from "../components/Dialog";
+
+const emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
 
 export default function AddEmployee() {
   const [fname, setFname] = useState("");
@@ -10,6 +14,8 @@ export default function AddEmployee() {
   const [email, setEmail] = useState("");
   const [phno, setPhno] = useState("");
   const [department, setDepartment] = useState("");
+  const [errors, setErrors] = useState({});
+  const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   function domainSelector(e) {
@@ -18,13 +24,26 @@ export default function AddEmployee() {
   function submitHandler(e) {
     e.preventDefault();
     console.log({ fname, lname, email, phno, department });
+    if (phno || email) {
+      if (!emailRegex.test(email)) {
+        setErrors({ ...errors, emailError: "Enter a Valid Email Address" });
+        return;
+      }
+      if (phno.length !== 10) {
+        setErrors({ ...errors, phnoError: "Enter a Valid Phone Number" });
+        return;
+      }
+    }
     if (!fname || !department || !email || !phno) return;
-    dispatch(addEmployee({ fname, lname, email, phno, department }));
+    dispatch(
+      addEmployee({ id: nanoid(), fname, lname, email, phno, department })
+    );
     setEmail("");
     setFname("");
     setLname("");
     setDepartment("");
     setPhno("");
+    setErrors({});
     navigate("/home");
   }
   function backHandler() {
@@ -33,7 +52,20 @@ export default function AddEmployee() {
   return (
     <>
       <h2 className={styles.header}>Add Employee</h2>
-      <form className={styles.form} onSubmit={submitHandler}>
+      <form
+        className={styles.form}
+        onSubmit={(e) => {
+          e.preventDefault();
+          setIsOpen(!isOpen);
+        }}
+      >
+        {isOpen && (
+          <Dialog
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            onConfirm={submitHandler}
+          />
+        )}
         <div className={styles.inputFields}>
           <div>
             <input
@@ -52,7 +84,9 @@ export default function AddEmployee() {
                 required
               />
               <br />
-              <span className={styles.error}></span>
+              {errors.emailError && (
+                <span className={styles.error}>{errors.emailError}</span>
+              )}
             </div>
 
             <select
@@ -86,7 +120,9 @@ export default function AddEmployee() {
                 required
               />
               <br />
-              <span className={styles.error}></span>
+              {errors.phnoError && (
+                <span className={styles.error}>{errors.phnoError}</span>
+              )}
             </div>
           </div>
           <br />

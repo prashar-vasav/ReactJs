@@ -19,7 +19,7 @@ const employeeSlice = createSlice({
   reducers: {
     addEmployee(state, action) {
       const emp = {
-        id: nanoid(),
+        id: action.payload.id,
         fname: action.payload.fname,
         lname: action.payload.lname,
         email: action.payload.email,
@@ -50,4 +50,5 @@ const employeeSlice = createSlice({
 
 export default employeeSlice.reducer;
 
-export const { addEmployee, deleteEmployee,updateEmployee } = employeeSlice.actions;
+export const { addEmployee, deleteEmployee, updateEmployee } =
+  employeeSlice.actions;
