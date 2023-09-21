@@ -47,6 +47,7 @@ export default function Home() {
   // ];
   console.log(employees);
   const [isOpen, setIsOpen] = useState(false);
+  const [dialogData, setDialogData] = useState(null);
   if (!userId) return <p>Please Login First</p>;
   return (
     <>
@@ -55,6 +56,16 @@ export default function Home() {
 
         <HamburgerMenu />
       </nav>
+      {isOpen && (
+        <Dialog
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          onConfirm={() => {
+            dispatch(deleteEmployee(dialogData));
+            setIsOpen(!isOpen);
+          }}
+        />
+      )}
 
       <div className={styles.btn}>
         <Link to="/add">
@@ -80,15 +91,6 @@ export default function Home() {
                 <td>{emp.phno}</td>
                 <td>{emp.department}</td>
                 <td>
-                    {isOpen && (
-                      <Dialog
-                        isOpen={isOpen}
-                        setIsOpen={setIsOpen}
-                        onConfirm={() => {
-                          dispatch(deleteEmployee(emp.id));
-                        }}
-                      />
-                    )}
                   <div className={styles.action}>
                     <Link to={`edit/${emp.id}`}>
                       <span className={styles.edit}>
@@ -97,7 +99,10 @@ export default function Home() {
                     </Link>
                     <span
                       className={styles.delete}
-                      onClick={() => setIsOpen(!isOpen)}
+                      onClick={() => {
+                        setIsOpen(!isOpen);
+                        setDialogData(emp.id);
+                      }}
                     >
                       <strong>Delete</strong>
                     </span>

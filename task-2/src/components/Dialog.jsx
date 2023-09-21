@@ -3,7 +3,7 @@ import styles from "./Dialog.module.css";
 
 function Dialog({ isOpen, setIsOpen, onConfirm }) {
   return (
-    <div>
+    <div className={styles.bg}>
       <dialog open={isOpen} id="confirmDialog">
         <h2 className={styles.dialogHeader}>
           <b>Are you sure?</b>
