@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { updateEmployee } from "../employeeSlice";
 import Button from "../components/Button";
+import Input from "../components/Input";
 
 const emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
 
@@ -65,7 +66,7 @@ function UpdateUser() {
       <form className={styles.form} name="addEmp" method="dialog">
         <div className={styles.inputFields}>
           <div>
-            <input
+            <Input
               type="text"
               name="fname"
               placeholder="FIRST NAME"
@@ -74,7 +75,7 @@ function UpdateUser() {
               required
             />
             <div className={styles.form} id="email">
-              <input
+              <Input
                 type="email"
                 name="email"
                 placeholder="EMAIL ID"
@@ -104,7 +105,7 @@ function UpdateUser() {
             </select>
           </div>
           <div>
-            <input
+            <Input
               type="text"
               name="lname"
               placeholder="LAST NAME"
@@ -113,7 +114,7 @@ function UpdateUser() {
             />
             <br />
             <div className="form" id="phno">
-              <input
+              <Input
                 type="number"
                 name="pno"
                 placeholder="PHONE NO"
