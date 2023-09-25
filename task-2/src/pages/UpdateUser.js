@@ -5,6 +5,8 @@ import { useState } from "react";
 import { updateEmployee } from "../employeeSlice";
 import Button from "../components/Button";
 
+const emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
+
 function UpdateUser() {
   const { id } = useParams();
   const emp = useSelector((state) => state.employee.employee);
@@ -26,10 +28,21 @@ function UpdateUser() {
   const [newEmail, setNewEmail] = useState(currEmail);
   const [newPhno, setNewPhno] = useState(currPhno);
   const [newDepartment, setNewDepartment] = useState(currDepartment);
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   function updateHandler() {
-    if (!newFname || !newDepartment || !newEmail || !newPhno) return;
+    if (newPhno || newEmail) {
+      if (!emailRegex.test(newEmail)) {
+        setErrors({ ...errors, emailError: "Enter a Valid Email Address" });
+        return;
+      }
+      if (newPhno.length !== 10) {
+        setErrors({ ...errors, phnoError: "Enter a Valid Phone Number" });
+        return;
+      }
+    }
+    if (!newFname || !newEmail || !newDepartment || !newPhno) return;
     const updatedUser = {
       id: id,
       fname: newFname,
@@ -70,7 +83,9 @@ function UpdateUser() {
                 required
               />
               <br />
-              <span className={styles.error}></span>
+              {errors.emailError && (
+                <span className={styles.error}>{errors.emailError}</span>
+              )}
             </div>
 
             <select
@@ -107,7 +122,9 @@ function UpdateUser() {
                 required
               />
               <br />
-              <span className={styles.error}></span>
+              {errors.phnoError && (
+                <span className={styles.error}>{errors.phnoError}</span>
+              )}
             </div>
           </div>
           <br />
