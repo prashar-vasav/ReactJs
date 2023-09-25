@@ -3,6 +3,7 @@ import styles from "./UpdateUser.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { updateEmployee } from "../employeeSlice";
+import Button from "../components/Button";
 
 function UpdateUser() {
   const { id } = useParams();
@@ -113,12 +114,12 @@ function UpdateUser() {
           <br />
         </div>
         <div className={styles.actions}>
-          <button type="button" className={styles.dis} onClick={backHandler}>
+          <Button type="button" className={styles.dis} onClick={backHandler}>
             DISCARD
-          </button>
-          <button type="submit" className={styles.sub} onClick={updateHandler}>
+          </Button>
+          <Button type="submit" className={styles.sub} onClick={updateHandler}>
             SUBMIT
-          </button>
+          </Button>
         </div>
       </form>
     </>

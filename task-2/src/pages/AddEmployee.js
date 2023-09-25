@@ -5,6 +5,8 @@ import { addEmployee } from "../employeeSlice";
 import { useNavigate } from "react-router-dom";
 import { nanoid } from "@reduxjs/toolkit";
 import Dialog from "../components/Dialog";
+import Button from "../components/Button";
+import Input from "../components/Input";
 
 const emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
 
@@ -68,7 +70,7 @@ export default function AddEmployee() {
         )}
         <div className={styles.inputFields}>
           <div>
-            <input
+            <Input
               type="text"
               name="fname"
               placeholder="FIRST NAME"
@@ -76,7 +78,7 @@ export default function AddEmployee() {
               required
             />
             <div className={styles.form} id="email">
-              <input
+              <Input
                 type="email"
                 name="email"
                 placeholder="EMAIL ID"
@@ -104,15 +106,16 @@ export default function AddEmployee() {
             </select>
           </div>
           <div>
-            <input
+            <Input
               type="text"
               name="lname"
               placeholder="LAST NAME"
               onChange={(e) => setLname(e.target.value)}
+              required={false}
             />
             <br />
             <div className="form" id="phno">
-              <input
+              <Input
                 type="number"
                 name="pno"
                 placeholder="PHONE NO"
@@ -129,12 +132,12 @@ export default function AddEmployee() {
           <br />
         </div>
         <div className={styles.actions}>
-          <button type="button" className={styles.dis} onClick={backHandler}>
+          <Button type="button" className={styles.dis} onClick={backHandler}>
             DISCARD
-          </button>
-          <button type="submit" className={styles.sub}>
+          </Button>
+          <Button type="submit" className={styles.sub}>
             SUBMIT
-          </button>
+          </Button>
         </div>
       </form>
     </>

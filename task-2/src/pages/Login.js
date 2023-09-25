@@ -3,6 +3,8 @@ import styles from "./Login.module.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { newUser } from "../userSlice";
+import Input from "../components/Input";
+import Button from "../components/Button";
 const emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
 const passwordRegex =
   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
@@ -43,7 +45,7 @@ export default function Login() {
       <h2 className={styles.header}>Welcome</h2>
       <form name="loginForm" className={styles.form} onSubmit={submitHandler}>
         <div className="form" id="email">
-          <input
+          <Input
             type="email"
             name="email"
             placeholder="USER ID"
@@ -56,7 +58,7 @@ export default function Login() {
           )}
         </div>
         <div className="form" id="pass">
-          <input
+          <Input
             type="password"
             name="pass"
             placeholder="PASSWORD"
@@ -70,7 +72,7 @@ export default function Login() {
         </div>
         <br />
         <br />
-        <button type="submit">LOGIN</button>
+        <Button type="submit">LOGIN</Button>
       </form>
     </>
   );
