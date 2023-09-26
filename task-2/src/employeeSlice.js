@@ -1,54 +1,101 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit";
+import {
+  createEmployee,
+  deleteEmployee,
+  getAllEmployees,
+  updateEmployee,
+} from "./services/employeeService";
 
 const initialState = {
   employee: [
     {
-      id: nanoid(),
-      fname: "vasav",
-      lname: "helo",
+      _id: nanoid(),
+      firstName: "vasav",
+      lastName: "helo",
       email: "prashar.vasav@tftus.com",
-      phno: "1234567890",
-      department: "Development",
+      phoneNo: "1234567890",
+      domain: "Development",
     },
   ],
+  status: "idle",
+  error: "",
 };
+
+export const fetchEmployees = createAsyncThunk(
+  "employees/getAllEmployees",
+  async function () {
+    return getAllEmployees();
+  }
+);
+
+export const newEmployee = createAsyncThunk(
+  "employees/createEmployee",
+  async function (data) {
+    return createEmployee(data);
+  }
+);
+export const update = createAsyncThunk(
+  "employees/updateEmployee",
+  async function (id, updatedUser) {
+    return updateEmployee(id, updatedUser);
+  }
+);
+export const delEmployee = createAsyncThunk(
+  "employees/deleteEmployee",
+  async function (id) {
+    return deleteEmployee(id);
+  }
+);
 
 const employeeSlice = createSlice({
   name: "employee",
   initialState,
   reducers: {
-    addEmployee(state, action) {
-      const emp = {
-        id: action.payload.id,
-        fname: action.payload.fname,
-        lname: action.payload.lname,
-        email: action.payload.email,
-        phno: action.payload.phno,
-        department: action.payload.department,
-      };
-      state.employee.push(emp);
-    },
+    // addEmployee(state, action) {
+    //   const emp = {
+    //     _id: action.payload._id,
+    //     firstName: action.payload.firstName,
+    //     lastName: action.payload.lastName,
+    //     email: action.payload.email,
+    //     phoneNo: action.payload.phoneNo,
+    //     domain: action.payload.domain,
+    //   };
+    //   state.employee.push(emp);
+    // },
     deleteEmployee(state, action) {
       state.employee = state.employee.filter(
-        (emp) => emp.id !== action.payload
+        (emp) => emp._id !== action.payload
       );
     },
-    updateEmployee(state, action) {
-      state.employee.map((emp) => {
-        if (emp.id === action.payload.id) {
-          emp.fname = action.payload.fname;
-          emp.lname = action.payload.lname;
-          emp.email = action.payload.email;
-          emp.phno = action.payload.phno;
-          emp.department = action.payload.department;
-        }
-        return null;
-      });
-    },
+    // updateEmployee(state, action) {
+    //   state.employee.map((emp) => {
+    //     if (emp._id === action.payload._id) {
+    //       emp.firstName = action.payload.firstName;
+    //       emp.lastName = action.payload.lastName;
+    //       emp.email = action.payload.email;
+    //       emp.phoneNo = action.payload.phoneNo;
+    //       emp.domain = action.payload.domain;
+    //     }
+    //     return null;
+    //   });
+    // },
   },
+  extraReducers: (builder) =>
+    builder
+      .addCase(fetchEmployees.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(fetchEmployees.fulfilled, (state, action) => {
+        state.status = "idle";
+        console.log(action.payload);
+        state.employee = action.payload;
+      })
+      .addCase(fetchEmployees.rejected, (state, action) => {
+        state.status = "error";
+        state.error = action.error.message;
+      }),
 });
 
 export default employeeSlice.reducer;
 
-export const { addEmployee, deleteEmployee, updateEmployee } =
-  employeeSlice.actions;
+export const { addEmployee} = employeeSlice.actions;

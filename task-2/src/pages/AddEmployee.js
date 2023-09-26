@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./AddEmployee.module.css";
 import { useDispatch } from "react-redux";
-import { addEmployee } from "../employeeSlice";
+import { addEmployee, newEmployee } from "../employeeSlice";
 import { useNavigate } from "react-router-dom";
 import { nanoid } from "@reduxjs/toolkit";
 import Dialog from "../components/Dialog";
@@ -36,9 +36,15 @@ export default function AddEmployee() {
         return;
       }
     }
-    if (!fname || !department || !email || !phno) return;
+    if (!fname || !lname || !department || !email || !phno) return;
     dispatch(
-      addEmployee({ id: nanoid(), fname, lname, email, phno, department })
+      newEmployee({
+        firstName: fname,
+        lastName: lname,
+        email,
+        phoneNo: phno,
+        domain: department,
+      })
     );
     setEmail("");
     setFname("");
@@ -58,7 +64,8 @@ export default function AddEmployee() {
         className={styles.form}
         onSubmit={(e) => {
           e.preventDefault();
-          setIsOpen(!isOpen);
+         setIsOpen(!isOpen)
+          
         }}
       >
         {isOpen && (
@@ -111,7 +118,7 @@ export default function AddEmployee() {
               name="lname"
               placeholder="LAST NAME"
               onChange={(e) => setLname(e.target.value)}
-              required={false}
+              required
             />
             <br />
             <div className="form" id="phno">

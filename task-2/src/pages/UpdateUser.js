@@ -2,9 +2,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import styles from "./UpdateUser.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { updateEmployee } from "../employeeSlice";
+// import { updateEmployee } from "../employeeSlice";
 import Button from "../components/Button";
 import Input from "../components/Input";
+
+import { update } from "../employeeSlice";
 
 const emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
 
@@ -14,13 +16,13 @@ function UpdateUser() {
   const dispatch = useDispatch();
   console.log(emp);
   console.log(id);
-  const getEmployeeById = emp.filter((item) => item.id === id);
-  console.log(getEmployeeById[0]);
+  const getEmployeeById = emp.filter((item) => item._id === id);
+
   const {
-    fname: currFname,
-    lname: currLname,
-    phno: currPhno,
-    department: currDepartment,
+    firstName: currFname,
+    lastName: currLname,
+    phoneNo: currPhno,
+    domain: currDepartment,
     email: currEmail,
   } = getEmployeeById[0];
   console.log(currDepartment, currEmail, currFname, currLname, currPhno);
@@ -43,17 +45,17 @@ function UpdateUser() {
         return;
       }
     }
-    if (!newFname || !newEmail || !newDepartment || !newPhno) return;
+    if (!newFname || !newLname || !newEmail || !newDepartment || !newPhno)
+      return;
     const updatedUser = {
-      id: id,
-      fname: newFname,
-      lname: newLname,
+      firstName: newFname,
+      lastName: newLname,
       email: newEmail,
-      department: newDepartment,
-      phno: newPhno,
+      phoneNo: newPhno,
+      domain: newDepartment,
     };
     console.log(updatedUser);
-    dispatch(updateEmployee(updatedUser));
+    dispatch(update(id,updatedUser));
     navigate(-1);
   }
   function backHandler() {
@@ -111,6 +113,7 @@ function UpdateUser() {
               placeholder="LAST NAME"
               defaultValue={currLname}
               onChange={(e) => setNewLname(e.target.value)}
+              required
             />
             <br />
             <div className="form" id="phno">

@@ -1,53 +1,31 @@
 import { Link } from "react-router-dom";
 import styles from "./Home.module.css";
+
 import { useDispatch, useSelector } from "react-redux";
-import { deleteEmployee } from "../employeeSlice";
+import {
+  
+  delEmployee,
+  fetchEmployees,
+} from "../employeeSlice";
 
 import HamburgerMenu from "../components/HamburgerMenu";
 import Dialog from "../components/Dialog";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getAllEmployees } from "../services/employeeService";
 
 export default function Home() {
   const employees = useSelector((state) => state.employee.employee);
+  console.log(employees);
+
   const { userId } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  // const employees = [
-  //   {
-  //     id: 32,
-  //     fname: "vasav",
-  //     lname: "",
-  //     email: "prashar.vasav@tftus.com",
-  //     phno: "6xxxxxxxx6",
-  //     domain: "Development",
-  //   },
-  //   {
-  //     id: 332,
-  //     fname: "vasav",
-  //     lname: "",
-  //     email: "prashar.vasav@tftus.com",
-  //     phno: "6xxxxxxxx6",
-  //     domain: "Development",
-  //   },
-  //   {
-  //     id: 312,
-  //     fname: "vasav",
-  //     lname: "",
-  //     email: "prashar.vasav@tftus.com",
-  //     phno: "6xxxxxxxx6",
-  //     domain: "Development",
-  //   },
-  //   {
-  //     id: 352,
-  //     fname: "vasav",
-  //     lname: "helo",
-  //     email: "prashar.vasav@tftus.com",
-  //     phno: "6xxxxxxxx6",
-  //     domain: "Development",
-  //   },
-  // ];
+  
   console.log(employees);
   const [isOpen, setIsOpen] = useState(false);
   const [dialogData, setDialogData] = useState(null);
+  useEffect(() => {
+    dispatch(fetchEmployees());
+  }, [isOpen]);
   if (!userId) return <p>Please Login First</p>;
   return (
     <>
@@ -61,7 +39,7 @@ export default function Home() {
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           onConfirm={() => {
-            dispatch(deleteEmployee(dialogData));
+            dispatch(delEmployee(dialogData));
             setIsOpen(!isOpen);
           }}
         />
@@ -85,14 +63,14 @@ export default function Home() {
           </thead>
           <tbody>
             {employees.map((emp) => (
-              <tr key={emp.id}>
-                <td>{`${emp.fname} ${emp.lname}`}</td>
+              <tr key={emp._id}>
+                <td>{`${emp.firstName} ${emp.lastName}`}</td>
                 <td>{emp.email}</td>
-                <td>{emp.phno}</td>
-                <td>{emp.department}</td>
+                <td>{emp.phoneNo}</td>
+                <td>{emp.domain}</td>
                 <td>
                   <div className={styles.action}>
-                    <Link to={`edit/${emp.id}`}>
+                    <Link to={`edit/${emp._id}`}>
                       <span className={styles.edit}>
                         <strong>Edit</strong>
                       </span>
@@ -101,7 +79,7 @@ export default function Home() {
                       className={styles.delete}
                       onClick={() => {
                         setIsOpen(!isOpen);
-                        setDialogData(emp.id);
+                        setDialogData(emp._id);
                       }}
                     >
                       <strong>Delete</strong>
