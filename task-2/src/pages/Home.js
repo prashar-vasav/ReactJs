@@ -2,31 +2,36 @@ import { Link } from "react-router-dom";
 import styles from "./Home.module.css";
 
 import { useDispatch, useSelector } from "react-redux";
-import {
-  
-  delEmployee,
-  fetchEmployees,
-} from "../employeeSlice";
+import { delEmployee, fetchEmployees } from "../employeeSlice";
 
 import HamburgerMenu from "../components/HamburgerMenu";
 import Dialog from "../components/Dialog";
 import { useEffect, useState } from "react";
 import { getAllEmployees } from "../services/employeeService";
+import store from "../store";
+
+store.dispatch(fetchEmployees());
 
 export default function Home() {
   const employees = useSelector((state) => state.employee.employee);
+  const employeeStatus = useSelector((state) => state.employee.status);
+  console.log(employeeStatus);
   console.log(employees);
 
   const { userId } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  
+
   console.log(employees);
   const [isOpen, setIsOpen] = useState(false);
   const [dialogData, setDialogData] = useState(null);
-  useEffect(() => {
-    dispatch(fetchEmployees());
-  }, [isOpen]);
+
+  // useEffect(() => {
+  //   dispatch(fetchEmployees());
+  // }, [isOpen]);
+
   if (!userId) return <p>Please Login First</p>;
+
+  if (employeeStatus === "Loading") return <p>Loading data..Please Wait</p>;
   return (
     <>
       <nav>

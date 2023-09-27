@@ -43,12 +43,11 @@ export async function deleteEmployee(id) {
    
     const response = await axios.delete(
       `http://localhost:8080/employees/${id}`
-      
     );
     console.log(response);
-    return response.data;
+    return id;
   } catch (error) {
-    console.error("Error updating employee:", error);
+    console.error("Error deleting employee:", error);
     throw error;
   }
 }

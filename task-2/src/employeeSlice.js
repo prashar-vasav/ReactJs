@@ -36,7 +36,7 @@ export const newEmployee = createAsyncThunk(
 );
 export const update = createAsyncThunk(
   "employees/updateEmployee",
-  async function (id, updatedUser) {
+  async function ({ id, updatedUser }) {
     return updateEmployee(id, updatedUser);
   }
 );
@@ -87,15 +87,47 @@ const employeeSlice = createSlice({
       })
       .addCase(fetchEmployees.fulfilled, (state, action) => {
         state.status = "idle";
-        console.log(action.payload);
         state.employee = action.payload;
       })
       .addCase(fetchEmployees.rejected, (state, action) => {
-        state.status = "error";
+        state.status = "error in fetching";
         state.error = action.error.message;
+      })
+      .addCase(newEmployee.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.employee.push(action.payload);
+      })
+      .addCase(newEmployee.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(update.fulfilled, (state, action) => {
+        state.status = "idle";
+        console.log(action.payload);
+        state.employee.map((emp) => {
+          if (emp._id === action.payload._id) {
+            emp.firstName = action.payload.firstName;
+            emp.lastName = action.payload.lastName;
+            emp.email = action.payload.email;
+            emp.phoneNo = action.payload.phoneNo;
+            emp.domain = action.payload.domain;
+          }
+          return null;
+        });
+      })
+      .addCase(update.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(delEmployee.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.employee = state.employee.filter(
+          (emp) => emp._id !== action.payload
+        );
+      })
+      .addCase(delEmployee.pending, (state, action) => {
+        state.status = "loading";
       }),
 });
 
 export default employeeSlice.reducer;
 
-export const { addEmployee} = employeeSlice.actions;
+export const { addEmployee } = employeeSlice.actions;

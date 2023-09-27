@@ -23,7 +23,7 @@ export default function AddEmployee() {
   function domainSelector(e) {
     setDepartment(e.target.value);
   }
-  function submitHandler(e) {
+  async function submitHandler(e) {
     e.preventDefault();
     console.log({ fname, lname, email, phno, department });
     if (phno || email) {

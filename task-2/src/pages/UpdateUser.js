@@ -45,7 +45,7 @@ function UpdateUser() {
         return;
       }
     }
-    if (!newFname || !newLname || !newEmail || !newDepartment || !newPhno)
+    if (!newFname || !newLname || !newEmail || !newPhno || !newDepartment)
       return;
     const updatedUser = {
       firstName: newFname,
@@ -55,7 +55,7 @@ function UpdateUser() {
       domain: newDepartment,
     };
     console.log(updatedUser);
-    dispatch(update(id,updatedUser));
+    dispatch(update({id, updatedUser}));
     navigate(-1);
   }
   function backHandler() {
