@@ -9,10 +9,14 @@ import Dialog from "../components/Dialog";
 import { useEffect, useState } from "react";
 import { getAllEmployees } from "../services/employeeService";
 import store from "../store";
+import { fetchCurrentLoactionWeather } from "../utils/helper";
 
 store.dispatch(fetchEmployees());
 
 export default function Home() {
+  const [weatherData, setWeatherData] = useState({});
+  const [weatherError, setWeatherError] = useState("");
+  const [weatherLoading, setWeatherLoading] = useState(false);
   const employees = useSelector((state) => state.employee.employee);
   const employeeStatus = useSelector((state) => state.employee.status);
   console.log(employeeStatus);
@@ -25,9 +29,17 @@ export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [dialogData, setDialogData] = useState(null);
 
-  // useEffect(() => {
-  //   dispatch(fetchEmployees());
-  // }, [isOpen]);
+  useEffect(function () {
+    async function getWeather() {
+      setWeatherLoading(true);
+      await fetchCurrentLoactionWeather()
+        .then((res) => res)
+        .then((result) => setWeatherData(result))
+        .catch((error) => setWeatherError(error));
+        setWeatherLoading(false);
+    }
+    getWeather();
+  }, []);
 
   if (!userId) return <p>Please Login First</p>;
 
@@ -36,6 +48,7 @@ export default function Home() {
     <>
       <nav>
         <h2>List Of Employees</h2>
+        {console.log(weatherData)}
 
         <HamburgerMenu />
       </nav>
@@ -50,11 +63,26 @@ export default function Home() {
         />
       )}
 
+      <div className={styles.weather}>
+        {!weatherError ? (
+          <>
+            <h3>
+              Current Location : <b>{weatherData.name}</b>
+            </h3>
+            <h4>{Math.floor(weatherData?.main?.temp - 273.15)}°C </h4>
+            <p>Humidity: {weatherData?.main?.humidity}</p>
+            <p></p>
+          </>
+        ) : (
+          <p>{weatherError.message}</p>
+        )}
+      </div>
       <div className={styles.btn}>
         <Link to="/add">
           <button className={styles.add}>Add</button>
         </Link>
       </div>
+
       <div className={styles.table}>
         <table>
           <thead>
