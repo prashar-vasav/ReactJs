@@ -1,4 +1,11 @@
-export default function Input({ type, onChange, placeholder,defaultValue,required }) {
+export default function Input({
+  type,
+  onChange,
+  placeholder,
+  defaultValue,
+  required,
+  value,
+}) {
   return (
     <input
       type={type}
@@ -6,6 +13,7 @@ export default function Input({ type, onChange, placeholder,defaultValue,require
       placeholder={placeholder}
       defaultValue={defaultValue}
       required={required}
+      value={value}
     />
   );
 }

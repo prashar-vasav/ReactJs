@@ -14,7 +14,6 @@ dialog {
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(15px);
-  
 }
 
 dialog .dialogHeader {

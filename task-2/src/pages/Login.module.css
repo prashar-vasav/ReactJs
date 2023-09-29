@@ -1,58 +1,54 @@
+.header {
+  height: 20px;
+  width: 300px;
+  padding-top: 20px;
+  color: #fff;
+  text-align: center;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px; /* 100% */
+  text-transform: uppercase;
+}
+form {
+  padding-top: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 300px;
+  height: auto;
+  margin: auto;
+  align-items: center;
+}
+.form input {
+  width: 300px;
+  height: 43.732px;
+  border-radius: 4px;
+  border: 1px solid #2148c0;
+  background: #fff;
+  margin-top: 20px;
+  padding-left: 10px;
+}
 
-  
-  .header {
-    height: 20px;
-    width: 300px;
-    padding-top: 20px;
-    color: #fff;
-    text-align: center;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 20px; /* 100% */
-    text-transform: uppercase;
-  }
-  form {
-    padding-top: 90px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 300px;
-    height: auto;
-    margin: auto;
-    align-items: center;
-  }
-  .form input {
-    width: 300px;
-    height: 43.732px;
-    border-radius: 4px;
-    border: 1px solid #2148c0;
-    background: #fff;
-    margin-top: 20px;
-    padding-left: 10px;
-  }
-  
-  form button{
-    width: 300px;
-    height: 45px;
-  
-    border-radius: 4px;
-    background: #fff;
-    color: #2148c0;
-    text-align: center;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 20px; /* 125% */
-    text-transform: uppercase;
-  }
-  .error {
-    color: #f00;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 20px; /* 166.667% */
-    text-transform: uppercase;
-  }
-  
-  
+form button {
+  width: 300px;
+  height: 45px;
+
+  border-radius: 4px;
+  background: #fff;
+  color: #2148c0;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px; /* 125% */
+  text-transform: uppercase;
+}
+.error {
+  color: #f00;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px; /* 166.667% */
+  text-transform: uppercase;
+}

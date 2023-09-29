@@ -8,26 +8,24 @@ import UpdateUser from "./pages/UpdateUser";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Login/>,
+    element: <Login />,
   },
   {
     path: "/add",
-    element: <AddEmployee/>,
+    element: <AddEmployee />,
   },
   {
     path: "/home",
-    element: <Home/>,
-   
+    element: <Home />,
   },
   {
-    path:'/home/edit/:id',
-    element:<UpdateUser/>
-  }
-  
+    path: "/home/edit/:id",
+    element: <UpdateUser />,
+  },
 ]);
 
 function App() {
-  return <RouterProvider router={router}/>;
+  return <RouterProvider router={router} />;
 }
 
 export default App;

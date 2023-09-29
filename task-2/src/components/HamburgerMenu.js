@@ -5,11 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../userSlice";
 import { useNavigate } from "react-router-dom";
 
-
 export default function HamburgerMenu() {
   const [showMenu, setShowMenu] = useState(false);
   const { userId } = useSelector((state) => state.user);
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   function logoutHandler() {

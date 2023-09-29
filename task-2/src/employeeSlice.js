@@ -62,11 +62,11 @@ const employeeSlice = createSlice({
     //   };
     //   state.employee.push(emp);
     // },
-    deleteEmployee(state, action) {
-      state.employee = state.employee.filter(
-        (emp) => emp._id !== action.payload
-      );
-    },
+    // deleteEmployee(state, action) {
+    //   state.employee = state.employee.filter(
+    //     (emp) => emp._id !== action.payload
+    //   );
+    // },
     // updateEmployee(state, action) {
     //   state.employee.map((emp) => {
     //     if (emp._id === action.payload._id) {
@@ -102,7 +102,6 @@ const employeeSlice = createSlice({
       })
       .addCase(update.fulfilled, (state, action) => {
         state.status = "idle";
-        console.log(action.payload);
         state.employee.map((emp) => {
           if (emp._id === action.payload._id) {
             emp.firstName = action.payload.firstName;

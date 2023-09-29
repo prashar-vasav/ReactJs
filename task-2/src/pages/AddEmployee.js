@@ -1,9 +1,8 @@
 import { useState } from "react";
 import styles from "./AddEmployee.module.css";
 import { useDispatch } from "react-redux";
-import { addEmployee, newEmployee } from "../employeeSlice";
+import {  newEmployee } from "../employeeSlice";
 import { useNavigate } from "react-router-dom";
-import { nanoid } from "@reduxjs/toolkit";
 import Dialog from "../components/Dialog";
 import Button from "../components/Button";
 import Input from "../components/Input";
@@ -25,7 +24,6 @@ export default function AddEmployee() {
   }
   async function submitHandler(e) {
     e.preventDefault();
-    console.log({ fname, lname, email, phno, department });
     if (phno || email) {
       if (!emailRegex.test(email)) {
         setErrors({ ...errors, emailError: "Enter a Valid Email Address" });
@@ -64,8 +62,7 @@ export default function AddEmployee() {
         className={styles.form}
         onSubmit={(e) => {
           e.preventDefault();
-         setIsOpen(!isOpen)
-          
+          setIsOpen(!isOpen);
         }}
       >
         {isOpen && (

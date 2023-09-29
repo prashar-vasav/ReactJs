@@ -2,7 +2,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import styles from "./UpdateUser.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-// import { updateEmployee } from "../employeeSlice";
 import Button from "../components/Button";
 import Input from "../components/Input";
 
@@ -14,8 +13,7 @@ function UpdateUser() {
   const { id } = useParams();
   const emp = useSelector((state) => state.employee.employee);
   const dispatch = useDispatch();
-  console.log(emp);
-  console.log(id);
+
   const getEmployeeById = emp.filter((item) => item._id === id);
 
   const {
@@ -25,7 +23,7 @@ function UpdateUser() {
     domain: currDepartment,
     email: currEmail,
   } = getEmployeeById[0];
-  console.log(currDepartment, currEmail, currFname, currLname, currPhno);
+
   const [newFname, setNewFname] = useState(currFname);
   const [newLname, setNewLname] = useState(currLname);
   const [newEmail, setNewEmail] = useState(currEmail);
@@ -54,8 +52,8 @@ function UpdateUser() {
       phoneNo: newPhno,
       domain: newDepartment,
     };
-    console.log(updatedUser);
-    dispatch(update({id, updatedUser}));
+
+    dispatch(update({ id, updatedUser }));
     navigate(-1);
   }
   function backHandler() {
