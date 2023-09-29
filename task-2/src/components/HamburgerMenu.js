@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "../Menu.png";
+import logo from "../assets/Menu.png";
 import styles from "./HamburgerMenu.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../userSlice";
