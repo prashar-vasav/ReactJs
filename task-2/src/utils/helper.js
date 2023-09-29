@@ -1,4 +1,7 @@
-import { getWeatherByLocation } from "../services/weatherService";
+import {
+  getWeatherByLocation,
+  getWeatherByQuery,
+} from "../services/weatherService";
 
 function getPosition() {
   return new Promise(function (resolve, reject) {
@@ -13,4 +16,8 @@ export async function fetchCurrentLoactionWeather() {
     longitude: positionObj.coords.longitude,
   };
   return await getWeatherByLocation(position.latitude, position.longitude);
+}
+
+export async function fetchWeatherByQuery(query) {
+  return await getWeatherByQuery(query);
 }

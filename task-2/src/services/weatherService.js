@@ -14,4 +14,17 @@ async function getWeatherByLocation(lat, lon) {
     throw error;
   }
 }
-export { getWeatherByLocation };
+
+async function getWeatherByQuery(query) {
+  try {
+    const response = await axios.get(
+      `http://api.openweathermap.org/data/2.5/weather?q=${query}&APPID=${API_KEY}`
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error in Fetching Location", error);
+    throw error;
+  }
+}
+export { getWeatherByLocation, getWeatherByQuery };

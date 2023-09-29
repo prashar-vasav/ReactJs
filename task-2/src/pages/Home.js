@@ -7,9 +7,13 @@ import { delEmployee, fetchEmployees } from "../employeeSlice";
 import HamburgerMenu from "../components/HamburgerMenu";
 import Dialog from "../components/Dialog";
 import { useEffect, useState } from "react";
-import { getAllEmployees } from "../services/employeeService";
 import store from "../store";
-import { fetchCurrentLoactionWeather } from "../utils/helper";
+import {
+  fetchCurrentLoactionWeather,
+  fetchWeatherByQuery,
+} from "../utils/helper";
+import WeatherCard from "../components/WeatherCard";
+import Search from "../components/Search";
 
 store.dispatch(fetchEmployees());
 
@@ -17,15 +21,13 @@ export default function Home() {
   const [weatherData, setWeatherData] = useState({});
   const [weatherError, setWeatherError] = useState("");
   const [weatherLoading, setWeatherLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const employees = useSelector((state) => state.employee.employee);
   const employeeStatus = useSelector((state) => state.employee.status);
-  console.log(employeeStatus);
-  console.log(employees);
 
   const { userId } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  console.log(employees);
   const [isOpen, setIsOpen] = useState(false);
   const [dialogData, setDialogData] = useState(null);
 
@@ -36,10 +38,30 @@ export default function Home() {
         .then((res) => res)
         .then((result) => setWeatherData(result))
         .catch((error) => setWeatherError(error));
-        setWeatherLoading(false);
+      setWeatherLoading(false);
     }
     getWeather();
   }, []);
+
+  function searchHandler(e) {
+    e.preventDefault();
+    if (searchQuery.length < 2) {
+      setWeatherError({
+        message: "City character length must be greater than 2",
+      });
+      return;
+    }
+    setWeatherLoading(true);
+    fetchWeatherByQuery(searchQuery)
+      .then((response) => response)
+      .then((result) => {
+        setWeatherData(result);
+      })
+      .catch((error) => setWeatherError(error.response.data));
+    setWeatherLoading(false);
+    setWeatherError("");
+    setSearchQuery("");
+  }
 
   if (!userId) return <p>Please Login First</p>;
 
@@ -48,8 +70,11 @@ export default function Home() {
     <>
       <nav>
         <h2>List Of Employees</h2>
-        {console.log(weatherData)}
-
+        <Search
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onSubmit={searchHandler}
+        />
         <HamburgerMenu />
       </nav>
       {isOpen && (
@@ -63,18 +88,12 @@ export default function Home() {
         />
       )}
 
-      <div className={styles.weather}>
-        {!weatherError ? (
-          <>
-            <h3>
-              Current Location : <b>{weatherData.name}</b>
-            </h3>
-            <h4>{Math.floor(weatherData?.main?.temp - 273.15)}°C </h4>
-            <p>Humidity: {weatherData?.main?.humidity}</p>
-            <p></p>
-          </>
+      <div>
+        {weatherLoading && <p className={styles.error}>Leading...</p>}
+        {!weatherError && typeof weatherData.weather != "undefined" ? (
+          <WeatherCard weatherData={weatherData} />
         ) : (
-          <p>{weatherError.message}</p>
+          <p className={styles.error}>{weatherError.message}</p>
         )}
       </div>
       <div className={styles.btn}>
