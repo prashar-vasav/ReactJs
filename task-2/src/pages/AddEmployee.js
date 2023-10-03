@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./AddEmployee.module.css";
 import { useDispatch } from "react-redux";
-import {  newEmployee } from "../reducers/employeeSlice";
+import { newEmployee } from "../reducers/employeeSlice";
 import { useNavigate } from "react-router-dom";
 import Dialog from "../components/Dialog";
 import Button from "../components/Button";
@@ -10,45 +10,58 @@ import Input from "../components/Input";
 const emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
 
 export default function AddEmployee() {
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
-  const [email, setEmail] = useState("");
-  const [phno, setPhno] = useState("");
-  const [department, setDepartment] = useState("");
+  const [formData, setFormData] = useState({
+    fname: "",
+    lname: "",
+    email: "",
+    phno: "",
+    department: "",
+  });
+ 
   const [errors, setErrors] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   function domainSelector(e) {
-    setDepartment(e.target.value);
+    setFormData({ ...formData, department: e.target.value });
   }
   async function submitHandler(e) {
     e.preventDefault();
-    if (phno || email) {
-      if (!emailRegex.test(email)) {
+    if (formData.phno || formData.email) {
+      if (!emailRegex.test(formData.email)) {
         setErrors({ ...errors, emailError: "Enter a Valid Email Address" });
         return;
       }
-      if (phno.length !== 10) {
+      if (formData.phno.length !== 10) {
         setErrors({ ...errors, phnoError: "Enter a Valid Phone Number" });
         return;
       }
     }
-    if (!fname || !lname || !department || !email || !phno) return;
+    if (
+      !formData.fname ||
+      !formData.lname ||
+      !formData.department ||
+      !formData.email ||
+      !formData.phno
+    )
+      return;
     dispatch(
       newEmployee({
-        firstName: fname,
-        lastName: lname,
-        email,
-        phoneNo: phno,
-        domain: department,
+        firstName: formData.fname,
+        lastName: formData.lname,
+        email: formData.email,
+        phoneNo: formData.phno,
+        domain: formData.department,
       })
     );
-    setEmail("");
-    setFname("");
-    setLname("");
-    setDepartment("");
-    setPhno("");
+    setFormData({
+      fname: "",
+      lname: "",
+      email: "",
+      phno: "",
+      department: "",
+    });
+   
     setErrors({});
     navigate("/home");
   }
@@ -78,7 +91,9 @@ export default function AddEmployee() {
               type="text"
               name="fname"
               placeholder="FIRST NAME"
-              onChange={(e) => setFname(e.target.value)}
+              onChange={(e) =>
+                setFormData({ ...formData, fname: e.target.value })
+              }
               required
             />
             <div className={styles.form} id="email">
@@ -86,7 +101,9 @@ export default function AddEmployee() {
                 type="email"
                 name="email"
                 placeholder="EMAIL ID"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
                 required
               />
               <br />
@@ -114,7 +131,9 @@ export default function AddEmployee() {
               type="text"
               name="lname"
               placeholder="LAST NAME"
-              onChange={(e) => setLname(e.target.value)}
+              onChange={(e) =>
+                setFormData({ ...formData, lname: e.target.value })
+              }
               required
             />
             <br />
@@ -123,7 +142,9 @@ export default function AddEmployee() {
                 type="number"
                 name="pno"
                 placeholder="PHONE NO"
-                onChange={(e) => setPhno(e.target.value)}
+                onChange={(e) =>
+                  setFormData({ ...formData, phno: e.target.value })
+                }
                 required
               />
               <br />
