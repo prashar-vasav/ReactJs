@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import logo from "../assets/Menu.png";
 import styles from "./HamburgerMenu.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutUser } from "../userSlice";
+import { logoutUser } from "../reducers/userSlice";
 import { useNavigate } from "react-router-dom";
 
 export default function HamburgerMenu() {

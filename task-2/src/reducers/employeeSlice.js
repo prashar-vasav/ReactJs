@@ -4,7 +4,7 @@ import {
   deleteEmployee,
   getAllEmployees,
   updateEmployee,
-} from "./services/employeeService";
+} from "../services/employeeService";
 
 const initialState = {
   employee: [

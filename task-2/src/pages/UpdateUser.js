@@ -5,7 +5,7 @@ import { useState } from "react";
 import Button from "../components/Button";
 import Input from "../components/Input";
 
-import { update } from "../employeeSlice";
+import { update } from "../reducers/employeeSlice";
 
 const emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
 

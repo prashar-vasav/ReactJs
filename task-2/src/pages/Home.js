@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styles from "./Home.module.css";
 
 import { useDispatch, useSelector } from "react-redux";
-import { delEmployee, fetchEmployees } from "../employeeSlice";
+import { delEmployee, fetchEmployees } from "../reducers/employeeSlice";
 
 import HamburgerMenu from "../components/HamburgerMenu";
 import Dialog from "../components/Dialog";

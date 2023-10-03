@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./AddEmployee.module.css";
 import { useDispatch } from "react-redux";
-import {  newEmployee } from "../employeeSlice";
+import {  newEmployee } from "../reducers/employeeSlice";
 import { useNavigate } from "react-router-dom";
 import Dialog from "../components/Dialog";
 import Button from "../components/Button";
