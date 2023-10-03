@@ -31,11 +31,7 @@ function UpdateUser() {
     newPhno: currPhno,
     newDepartment: currDepartment,
   });
-  // const [newFname, setNewFname] = useState(currFname);
-  // const [newLname, setNewLname] = useState(currLname);
-  // const [newEmail, setNewEmail] = useState(currEmail);
-  // const [newPhno, setNewPhno] = useState(currPhno);
-  // const [newDepartment, setNewDepartment] = useState(currDepartment);
+
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
