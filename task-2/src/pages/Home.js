@@ -22,8 +22,7 @@ export default function Home() {
   const [weatherError, setWeatherError] = useState("");
   const [weatherLoading, setWeatherLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const employees = useSelector((state) => state.employee.employee);
-  const employeeStatus = useSelector((state) => state.employee.status);
+  const { employee, status } = useSelector((state) => state.employee);
 
   const { userId } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -45,7 +44,7 @@ export default function Home() {
 
   function searchHandler(e) {
     e.preventDefault();
-    if (searchQuery.length < 2) {
+    if (searchQuery.length <= 2) {
       setWeatherError({
         message: "City character length must be greater than 2",
       });
@@ -65,7 +64,7 @@ export default function Home() {
 
   if (!userId) return <p>Please Login First</p>;
 
-  if (employeeStatus === "Loading") return <p>Loading data..Please Wait</p>;
+  if (status === "Loading") return <p>Loading data..Please Wait</p>;
   return (
     <>
       <nav>
@@ -114,7 +113,7 @@ export default function Home() {
             </tr>
           </thead>
           <tbody>
-            {employees.map((emp) => (
+            {employee.map((emp) => (
               <tr key={emp._id}>
                 <td>{`${emp.firstName} ${emp.lastName}`}</td>
                 <td>{emp.email}</td>

@@ -24,33 +24,46 @@ function UpdateUser() {
     email: currEmail,
   } = getEmployeeById[0];
 
-  const [newFname, setNewFname] = useState(currFname);
-  const [newLname, setNewLname] = useState(currLname);
-  const [newEmail, setNewEmail] = useState(currEmail);
-  const [newPhno, setNewPhno] = useState(currPhno);
-  const [newDepartment, setNewDepartment] = useState(currDepartment);
+  const [formData, setFormData] = useState({
+    newFname: currFname,
+    newLname: currLname,
+    newEmail: currEmail,
+    newPhno: currPhno,
+    newDepartment: currDepartment,
+  });
+  // const [newFname, setNewFname] = useState(currFname);
+  // const [newLname, setNewLname] = useState(currLname);
+  // const [newEmail, setNewEmail] = useState(currEmail);
+  // const [newPhno, setNewPhno] = useState(currPhno);
+  // const [newDepartment, setNewDepartment] = useState(currDepartment);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   function updateHandler() {
-    if (newPhno || newEmail) {
-      if (!emailRegex.test(newEmail)) {
+    if (formData.newPhno || formData.newEmail) {
+      if (!emailRegex.test(formData.newEmail)) {
         setErrors({ ...errors, emailError: "Enter a Valid Email Address" });
         return;
       }
-      if (newPhno.length !== 10) {
+      if (formData.newPhno.length !== 10) {
         setErrors({ ...errors, phnoError: "Enter a Valid Phone Number" });
         return;
       }
     }
-    if (!newFname || !newLname || !newEmail || !newPhno || !newDepartment)
+    if (
+      !formData.newFname ||
+      !formData.newLname ||
+      !formData.newEmail ||
+      !formData.newPhno ||
+      !formData.newDepartment
+    )
       return;
     const updatedUser = {
-      firstName: newFname,
-      lastName: newLname,
-      email: newEmail,
-      phoneNo: newPhno,
-      domain: newDepartment,
+      firstName: formData.newFname,
+      lastName: formData.newLname,
+      email: formData.newEmail,
+      phoneNo: formData.newPhno,
+      domain: formData.newDepartment,
     };
 
     dispatch(update({ id, updatedUser }));
@@ -71,7 +84,9 @@ function UpdateUser() {
               name="fname"
               placeholder="FIRST NAME"
               defaultValue={currFname}
-              onChange={(e) => setNewFname(e.target.value)}
+              onChange={(e) =>
+                setFormData({ ...formData, newFname: e.target.value })
+              }
               required
             />
             <div className={styles.form} id="email">
@@ -80,7 +95,9 @@ function UpdateUser() {
                 name="email"
                 placeholder="EMAIL ID"
                 defaultValue={currEmail}
-                onChange={(e) => setNewEmail(e.target.value)}
+                onChange={(e) =>
+                  setFormData({ ...formData, newEmail: e.target.value })
+                }
                 required
               />
               <br />
@@ -95,7 +112,9 @@ function UpdateUser() {
               placeholder="DOMAIN"
               required
               defaultValue={currDepartment}
-              onChange={(e) => setNewDepartment(e.target.value)}
+              onChange={(e) =>
+                setFormData({ ...formData, newDepartment: e.target.value })
+              }
             >
               <option value="">DOMAIN</option>
               <option value="Development">DEVELOPMENT</option>
@@ -110,7 +129,9 @@ function UpdateUser() {
               name="lname"
               placeholder="LAST NAME"
               defaultValue={currLname}
-              onChange={(e) => setNewLname(e.target.value)}
+              onChange={(e) =>
+                setFormData({ ...formData, newLname: e.target.value })
+              }
               required
             />
             <br />
@@ -120,7 +141,9 @@ function UpdateUser() {
                 name="pno"
                 placeholder="PHONE NO"
                 defaultValue={currPhno}
-                onChange={(e) => setNewPhno(e.target.value)}
+                onChange={(e) =>
+                  setFormData({ ...formData, newPhno: e.target.value })
+                }
                 required
               />
               <br />

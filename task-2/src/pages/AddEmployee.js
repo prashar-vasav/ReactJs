@@ -17,7 +17,7 @@ export default function AddEmployee() {
     phno: "",
     department: "",
   });
- 
+
   const [errors, setErrors] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
@@ -61,7 +61,7 @@ export default function AddEmployee() {
       phno: "",
       department: "",
     });
-   
+
     setErrors({});
     navigate("/home");
   }
