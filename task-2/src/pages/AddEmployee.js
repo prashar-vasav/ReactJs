@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Dialog from "../components/Dialog";
 import Button from "../components/Button";
 import Input from "../components/Input";
+import { useTranslation } from "react-i18next";
 
 const emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
 
@@ -22,6 +23,7 @@ export default function AddEmployee() {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   function domainSelector(e) {
     setFormData({ ...formData, department: e.target.value });
   }
@@ -70,7 +72,7 @@ export default function AddEmployee() {
   }
   return (
     <>
-      <h2 className={styles.header}>Add Employee</h2>
+      <h2 className={styles.header}>{t("addEmployee")}</h2>
       <form
         className={styles.form}
         onSubmit={(e) => {
@@ -158,10 +160,10 @@ export default function AddEmployee() {
         </div>
         <div className={styles.actions}>
           <Button type="button" className={styles.dis} onClick={backHandler}>
-            DISCARD
+            {t("discard")}
           </Button>
           <Button type="submit" className={styles.sub}>
-            SUBMIT
+            {t("submit")}
           </Button>
         </div>
       </form>

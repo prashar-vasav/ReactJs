@@ -14,6 +14,7 @@ import {
 } from "../utils/helper";
 import WeatherCard from "../components/WeatherCard";
 import Search from "../components/Search";
+import { useTranslation } from "react-i18next";
 
 store.dispatch(fetchEmployees());
 
@@ -29,6 +30,7 @@ export default function Home() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [dialogData, setDialogData] = useState(null);
+  const { t } = useTranslation();
 
   useEffect(function () {
     async function getWeather() {
@@ -68,7 +70,7 @@ export default function Home() {
   return (
     <>
       <nav>
-        <h2>List Of Employees</h2>
+        <h2>{t("listOfEmployee")}</h2>
         <Search
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -97,7 +99,7 @@ export default function Home() {
       </div>
       <div className={styles.btn}>
         <Link to="/add">
-          <button className={styles.add}>Add</button>
+          <button className={styles.add}>{t("Add")}</button>
         </Link>
       </div>
 
@@ -105,11 +107,11 @@ export default function Home() {
         <table>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Email ID</th>
-              <th>Phone No</th>
-              <th>Domain</th>
-              <th>Action</th>
+              <th>{t('Name')}</th>
+              <th>{t('Email')}</th>
+              <th>{t('Phno')}</th>
+              <th>{t('Domain')}</th>
+              <th>{t('Action')}</th>
             </tr>
           </thead>
           <tbody>
@@ -123,7 +125,7 @@ export default function Home() {
                   <div className={styles.action}>
                     <Link to={`edit/${emp._id}`}>
                       <span className={styles.edit}>
-                        <strong>Edit</strong>
+                        <strong>{t('Edit')}</strong>
                       </span>
                     </Link>
                     <span
@@ -133,7 +135,7 @@ export default function Home() {
                         setDialogData(emp._id);
                       }}
                     >
-                      <strong>Delete</strong>
+                      <strong>{t('Delete')}</strong>
                     </span>
                   </div>
                 </td>

@@ -6,6 +6,7 @@ import Button from "../components/Button";
 import Input from "../components/Input";
 
 import { update } from "../reducers/employeeSlice";
+import { useTranslation } from "react-i18next";
 
 const emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
 
@@ -34,6 +35,7 @@ function UpdateUser() {
 
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   function updateHandler() {
     if (formData.newPhno || formData.newEmail) {
@@ -71,7 +73,7 @@ function UpdateUser() {
 
   return (
     <>
-      <h2 className={styles.header}>Update Employee</h2>
+      <h2 className={styles.header}>{t("UpdateEmployee")}</h2>
       <form className={styles.form} name="addEmp" method="dialog">
         <div className={styles.inputFields}>
           <div>
@@ -153,10 +155,10 @@ function UpdateUser() {
         </div>
         <div className={styles.actions}>
           <Button type="button" className={styles.dis} onClick={backHandler}>
-            DISCARD
+            {t("Discard")}
           </Button>
           <Button type="submit" className={styles.sub} onClick={updateHandler}>
-            SUBMIT
+            {t("Submit")}
           </Button>
         </div>
       </form>
